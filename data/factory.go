@@ -119,7 +119,7 @@ var ledgerEntryTypes = map[string]LedgerEntryType{
 	"Ticket":         TICKET,
 	"PayChannel":     PAY_CHANNEL,
 	"Check":          CHECK,
-	"DepositPreAuth": DEPOSIT_PRE_AUTH,
+	"DepositPreauth": DEPOSIT_PRE_AUTH,
 }
 
 var txNames = [...]string{
