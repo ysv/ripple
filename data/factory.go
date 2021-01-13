@@ -142,6 +142,7 @@ var txNames = [...]string{
 	CHECK_CREATE:    "CheckCreate",
 	CHECK_CASH:      "CheckCash",
 	CHECK_CANCEL:    "CheckCancel",
+	DEPOSIT_PRE_AUTH: "DepositPreauth",
 }
 
 var txTypes = map[string]TransactionType{
@@ -164,6 +165,7 @@ var txTypes = map[string]TransactionType{
 	"CheckCreate":          CHECK_CREATE,
 	"CheckCash":            CHECK_CASH,
 	"CheckCancel":          CHECK_CANCEL,
+	"DepositPreauth": 		DEPOSIT_PREAUTH,
 }
 
 var HashableTypes []string
