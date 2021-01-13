@@ -163,6 +163,10 @@ type CheckCancel struct {
 	CheckID Hash256
 }
 
+type DepositPreauth struct {
+	TxBase
+}
+
 type TicketCreate struct {
 	Target     *Account `json:",omitempty"`
 	Expiration *uint32  `json:",omitempty"`

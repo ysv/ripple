@@ -44,6 +44,7 @@ const (
 	ACCOUNT_DELETE  TransactionType = 21
 	AMENDMENT       TransactionType = 100
 	SET_FEE         TransactionType = 101
+	DEPOSIT_PREAUTH TransactionType = 102
 )
 
 var LedgerFactory = [...]func() Hashable{
@@ -86,6 +87,7 @@ var TxFactory = [...]func() Transaction{
 	CHECK_CREATE:    func() Transaction { return &CheckCreate{TxBase: TxBase{TransactionType: CHECK_CREATE}} },
 	CHECK_CASH:      func() Transaction { return &CheckCash{TxBase: TxBase{TransactionType: CHECK_CASH}} },
 	CHECK_CANCEL:    func() Transaction { return &CheckCancel{TxBase: TxBase{TransactionType: CHECK_CANCEL}} },
+	DEPOSIT_PREAUTH: func() Transaction { return &DepositPreauth{TxBase: TxBase{TransactionType: DEPOSIT_PREAUTH}} },
 }
 
 var ledgerEntryNames = [...]string{
