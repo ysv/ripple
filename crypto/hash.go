@@ -17,6 +17,10 @@ func NewRippleHash(s string) (Hash, error) {
 		return newHashFromString(ACCOUNT_ZERO)
 	case "1":
 		return newHashFromString(ACCOUNT_ONE)
+	case "":
+		// Special case for UNLMODIFY tx type since it has '' account.
+		// https://xrpl.org/unlmodify.html
+		return newHashFromString(NaN)
 	default:
 		return newHashFromString(s)
 	}

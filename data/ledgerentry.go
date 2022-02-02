@@ -11,6 +11,11 @@ type leBase struct {
 	Id                Hash256  `json:"-"`
 }
 
+// Not all fields are present here.
+type NegativeUNL struct {
+	leBase
+}
+
 type AccountRoot struct {
 	leBase
 	Flags         *LedgerEntryFlag `json:",omitempty"`
@@ -190,6 +195,7 @@ func (d *Directory) Affects(account Account) bool    { return false }
 func (l *LedgerHashes) Affects(account Account) bool { return false }
 func (a *Amendments) Affects(account Account) bool   { return false }
 func (f *FeeSettings) Affects(account Account) bool  { return false }
+func (f *NegativeUNL) Affects(account Account) bool  { return false }
 func (s *Escrow) Affects(account Account) bool {
 	return s.Account.Equals(account) || s.Destination.Equals(account)
 }

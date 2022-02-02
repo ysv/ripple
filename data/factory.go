@@ -21,6 +21,7 @@ const (
 	PAY_CHANNEL      LedgerEntryType = 0x78 // 'x'
 	CHECK            LedgerEntryType = 0x43 // 'C'
 	DEPOSIT_PRE_AUTH LedgerEntryType = 0x70 // 'p'
+	NEGATIVE_UNL     LedgerEntryType = 0x4e
 
 	// TransactionType values come from rippled's "TxFormats.h"
 	PAYMENT         TransactionType = 0
@@ -44,7 +45,9 @@ const (
 	ACCOUNT_DELETE  TransactionType = 21
 	AMENDMENT       TransactionType = 100
 	SET_FEE         TransactionType = 101
+
 	// The next types are not fully supported. They just added to avoid "Unknown TransactionType" error.
+	UNL_MODIFY      TransactionType = 102
 	DEPOSIT_PREAUTH TransactionType = 200
 )
 
@@ -66,6 +69,7 @@ var LedgerEntryFactory = [...]func() LedgerEntry{
 	PAY_CHANNEL:      func() LedgerEntry { return &PayChannel{leBase: leBase{LedgerEntryType: PAY_CHANNEL}} },
 	CHECK:            func() LedgerEntry { return &Check{leBase: leBase{LedgerEntryType: CHECK}} },
 	DEPOSIT_PRE_AUTH: func() LedgerEntry { return &DepositPreAuth{leBase: leBase{LedgerEntryType: DEPOSIT_PRE_AUTH}} },
+	NEGATIVE_UNL:     func() LedgerEntry { return &NegativeUNL{leBase: leBase{LedgerEntryType: DEPOSIT_PRE_AUTH}} },
 }
 
 var TxFactory = [...]func() Transaction{
@@ -88,8 +92,13 @@ var TxFactory = [...]func() Transaction{
 	CHECK_CREATE:    func() Transaction { return &CheckCreate{TxBase: TxBase{TransactionType: CHECK_CREATE}} },
 	CHECK_CASH:      func() Transaction { return &CheckCash{TxBase: TxBase{TransactionType: CHECK_CASH}} },
 	CHECK_CANCEL:    func() Transaction { return &CheckCancel{TxBase: TxBase{TransactionType: CHECK_CANCEL}} },
+
+	// BETA
+	TICKET_CREATE: func() Transaction { return &TicketCreate{TxBase: TxBase{TransactionType: TICKET_CREATE}} },
+
 	// The next types are not fully supported. They just added to avoid "Unknown TransactionType" error.
-	DEPOSIT_PREAUTH: func() Transaction { return &DepositPreauth{TxBase: TxBase{TransactionType: DEPOSIT_PREAUTH} }},
+	DEPOSIT_PREAUTH: func() Transaction { return &DepositPreauth{TxBase: TxBase{TransactionType: DEPOSIT_PREAUTH}} },
+	UNL_MODIFY:      func() Transaction { return &UNLModify{TxBase: TxBase{TransactionType: UNL_MODIFY}} },
 }
 
 var ledgerEntryNames = [...]string{
@@ -106,6 +115,7 @@ var ledgerEntryNames = [...]string{
 	PAY_CHANNEL:      "PayChannel",
 	CHECK:            "Check",
 	DEPOSIT_PRE_AUTH: "DepositPreAuth",
+	NEGATIVE_UNL:     "NegativeUNL",
 }
 
 var ledgerEntryTypes = map[string]LedgerEntryType{
@@ -122,6 +132,7 @@ var ledgerEntryTypes = map[string]LedgerEntryType{
 	"PayChannel":     PAY_CHANNEL,
 	"Check":          CHECK,
 	"DepositPreauth": DEPOSIT_PRE_AUTH,
+	"NegativeUNL":    NEGATIVE_UNL,
 }
 
 var txNames = [...]string{
@@ -145,6 +156,7 @@ var txNames = [...]string{
 	CHECK_CASH:       "CheckCash",
 	CHECK_CANCEL:     "CheckCancel",
 	DEPOSIT_PRE_AUTH: "DepositPreauth",
+	UNL_MODIFY:       "UNLModify",
 }
 
 var txTypes = map[string]TransactionType{
@@ -168,6 +180,8 @@ var txTypes = map[string]TransactionType{
 	"CheckCash":            CHECK_CASH,
 	"CheckCancel":          CHECK_CANCEL,
 	"DepositPreauth":       DEPOSIT_PREAUTH,
+	"TicketCreate":         TICKET_CREATE,
+	"UNLModify":            UNL_MODIFY,
 }
 
 var HashableTypes []string

@@ -168,8 +168,9 @@ type DepositPreauth struct {
 }
 
 type TicketCreate struct {
-	Target     *Account `json:",omitempty"`
-	Expiration *uint32  `json:",omitempty"`
+	TxBase
+	Target      *Account `json:",omitempty"`
+	TicketCount uint32   `json:",omitempty"`
 }
 
 type TicketCancel struct {
@@ -180,6 +181,10 @@ type SignerListSet struct {
 	TxBase
 	SignerQuorum  uint32        `json:",omitempty"`
 	SignerEntries []SignerEntry `json:",omitempty"`
+}
+
+type UNLModify struct {
+	TxBase
 }
 
 func (t *TxBase) GetBase() *TxBase                    { return t }
