@@ -6,6 +6,7 @@ type TxBase struct {
 	SourceTag          *uint32          `json:",omitempty"`
 	Account            Account
 	Sequence           uint32
+	TicketSequence     uint32 `json:",omitempty"`
 	Fee                Value
 	AccountTxnID       *Hash256        `json:",omitempty"`
 	SigningPubKey      *PublicKey      `json:",omitempty"`
@@ -187,6 +188,13 @@ type UNLModify struct {
 	TxBase
 }
 
+func (t *TxBase) RealSequence() uint32 {
+	if t.Sequence == 0 {
+		return t.TicketSequence
+	}
+
+	return t.Sequence
+}
 func (t *TxBase) GetBase() *TxBase                    { return t }
 func (t *TxBase) GetType() string                     { return txNames[t.TransactionType] }
 func (t *TxBase) GetTransactionType() TransactionType { return t.TransactionType }
