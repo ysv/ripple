@@ -299,3 +299,18 @@ type FeeResult struct {
 	MaxQueueSize uint32 `json:"max_queue_size,string"`
 	Status       string `json:"status"`
 }
+
+type GatewayBalances struct {
+	*Command
+	Account data.Account           `json:"account"`
+	Strict  bool                   `json:"strict,omitempty"`
+	Result  *GatewayBalancesResult `json:"result,omitempty"`
+}
+
+type GatewayBalancesResult struct {
+	Obligations *map[string]string `json:"obligations"`
+	Account     string             `json:"account"`
+	LedgerIndex uint32             `json:"ledger_index"`
+	LedgerHash  string             `json:"ledger_hash"`
+	Validated   bool               `json:"validated"`
+}

@@ -464,6 +464,21 @@ func (r *Remote) BookOffers(taker data.Account, ledgerIndex interface{}, pays, g
 	return cmd.Result, nil
 }
 
+// Load Gateway Balances for the given account
+func (r *Remote) GatewayBalances(a data.Account) (*GatewayBalancesResult, error) {
+	cmd := &GatewayBalances{
+		Command: newCommand("gateway_balances"),
+		Account: a,
+		Strict:  true,
+	}
+	r.outgoing <- cmd
+	<-cmd.Ready
+	if cmd.CommandError != nil {
+		return nil, cmd.CommandError
+	}
+	return cmd.Result, nil
+}
+
 // Synchronously subscribe to streams and receive a confirmation message
 // Streams are recived asynchronously over the Incoming channel
 func (r *Remote) Subscribe(ledger, transactions, transactionsProposed, server bool) (*SubscribeResult, error) {
