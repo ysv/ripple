@@ -464,7 +464,7 @@ func (r *Remote) BookOffers(taker data.Account, ledgerIndex interface{}, pays, g
 	return cmd.Result, nil
 }
 
-// Execute an account commnad
+// Load Gateway Balances for the given account
 func (r *Remote) GatewayBalances(a data.Account) (*GatewayBalancesResult, error) {
 	cmd := &GatewayBalances{
 		Command: newCommand("gateway_balances"),
